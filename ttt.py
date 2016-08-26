@@ -47,11 +47,9 @@ def index():
 @app.route("/<int:player>", methods=["GET", "POST"])
 def index2(player):
   if checkGameOver(df) is False:
-    print(checkGameOver(df))
     return render_template("index.html", df=df, colNames=colNames, player=player)
   else:
     winMsg = checkWinner(df)
-    print(winMsg)
     return render_template("index.html", df=df, colNames=colNames, player=player, winMsg=winMsg)
 
 @app.route("/redir", methods=["GET", "POST"])
