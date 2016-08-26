@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Tic Tac Toe</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="/static/css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="/static/css/ie10_workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/static/css/theme.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container" align="center">
+        <div class="row">
+            <div class="col-md-12">
+                <a class="navbar-brand">Tic Tac Toe</a>
+            </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container theme-showcase" role="main">
+      <div class="row"><div class="col-md-4"></div>
+        <div class="col-md-4" align="center">
+          <h3> {% if player is equalto 1 %} Player X Moves Next {% else %} Player O Moves Next {% endif %}</h3>
+          <table class="table">
+            <tbody>
+              {% for row in range(df.index|length) %}
+              <tr> {% for val in range(df.ix[row, colNames]|length) %}
+                <td align="center">
+                  <form method="post" action={{ url_for("redir") }}>
+                  <button class="btn btn-default" value="{{ [player, row, val] }}" type="submit" name="info" style="height:80px;width:80px;font-size:50px">
+                    {% if df.ix[row, colNames[val]] is equalto 1 %} {{ "X" }} {% endif %} {% if df.ix[row, colNames[val]] is equalto 0 %} {{ "O" }} {% endif %}
+                  </button>
+                  </form>
+                </td>
+                  {% endfor %}
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div><div class="col-md-4"></div>
+      </div>
+
+    <div align="center">
+      <form method="post" action={{ url_for("reset") }}>
+        <button class="btn btn-danger" type="submit" name="reset">RESET BOARD</button>
+      </form>
+    </div>
+<div align="center" style="height:20px"></div>
+  </div> <!-- /container -->
+
+     {% with messages = get_flashed_messages() %}
+     {% if messages %}
+    <div class="alert alert-danger" role="alert" align="center">
+      {% for message in messages %}
+    <strong>{{ message }}</strong>
+      {% endfor %}
+    </div>
+     {% endif %}
+     {% endwith %}
+
+     {% if winMsg %}
+    <div class="alert alert-success" role="alert" align="center">
+    <strong>{{ winMsg }}</strong>
+    </div>
+     {% endif %}
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12" align="center"><p>Copyright &copy; Goran Peic 2016</p></div>
+            </div>
+            <!-- /.row -->
+        </footer>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/static/js/jquery.min.js"><\/script>')</script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/docs.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="/static/js/ie10_workaround.js"></script>
+  </body>
+</html>
