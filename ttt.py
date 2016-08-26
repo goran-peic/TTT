@@ -52,7 +52,7 @@ def index2(player):
     winMsg = checkWinner(df)
     return render_template("index.html", df=df, colNames=colNames, player=player, winMsg=winMsg)
 
-@app.route("/redir", methods=["GET", "POST"])
+@app.route("/redir", methods=["POST"])
 def redir():
   info = request.form["info"]
   player = int(info[1]); row = int(info[4]); col = colNames[int(info[7])]
@@ -71,6 +71,7 @@ def reset():
   for row in range(len(df.index)):
     for col in colNames:
       df.ix[row, col] = np.nan
+  player = 1
   return redirect(url_for("index"))
 
 if __name__ == "__main__":
