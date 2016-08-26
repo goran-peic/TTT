@@ -50,7 +50,7 @@
                 <td align="center">
                   <form method="post" action={{ url_for("redir") }}>
                   <button class="btn btn-default" value="{{ [player, row, val] }}" type="submit" name="info" style="height:80px;width:80px;font-size:50px">
-                    {% if df.ix[row, colNames[val]] is equalto 1 %} {{ "X" }} {% endif %} {% if df.ix[row, colNames[val]] is equalto 0 %} {{ "O" }} {% endif %}
+                    {% if df.ix[row, colNames[val]] is equalto 1 %} X {% elif df.ix[row, colNames[val]] is equalto 0 %} O {% endif %}
                   </button>
                   </form>
                 </td>
