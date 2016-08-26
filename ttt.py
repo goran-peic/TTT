@@ -40,11 +40,11 @@ def checkGameOver(dframe):
   if checkWinner(dframe) is not None: return True
   else: return False
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/", methods=["GET"])
 def index():
     return render_template("index.html", df=df, colNames=colNames, player=player)
 
-@app.route("/<int:player>", methods=["GET", "POST"])
+@app.route("/<int:player>", methods=["GET"])
 def index2(player):
   if checkGameOver(df) is False:
     return render_template("index.html", df=df, colNames=colNames, player=player)
