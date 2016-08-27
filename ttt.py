@@ -10,11 +10,6 @@ colNames = ['A', 'B', 'C']
 df.columns = colNames
 player = 1
 
-def resetBoard(dframe):
-  dframe = dframe.replace([0, 1], np.nan)[:]
-  player = 1
-  return dframe
-
 def sumOfDiagonal(dframe, align):
   colNamesTemp = colNames[:]
   tempSum = 0
