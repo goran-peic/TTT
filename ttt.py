@@ -5,9 +5,9 @@ import numpy as np
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "ITSASECRET"
 
-df = pd.DataFrame(index=range(3), columns=range(3))
+dframe = pd.DataFrame(index=range(3), columns=range(3))
 colNames = ['A', 'B', 'C']
-df.columns = colNames
+dframe.columns = colNames
 player = 1
 
 def sumOfDiagonal(dframe, align):
@@ -37,38 +37,38 @@ def checkGameOver(dframe):
 
 @app.route("/", methods=["GET"])
 def index():
-    return render_template("index.html", df=df, colNames=colNames, player=player)
+    return render_template("index.html", dframe=dframe, colNames=colNames, player=player)
 
 @app.route("/<int:player>", methods=["GET"])
 def index2(player):
   print("#####")
-  print(df)
+  print(dframe)
   print("#####")
-  if checkGameOver(df) is False:
-    return render_template("index.html", df=df, colNames=colNames, player=player)
+  if checkGameOver(dframe) is False:
+    return render_template("index.html", dframe=dframe, colNames=colNames, player=player)
   else:
-    winMsg = checkWinner(df)
-    return render_template("index.html", df=df, colNames=colNames, player=player, winMsg=winMsg)
+    winMsg = checkWinner(dframe)
+    return render_template("index.html", dframe=dframe, colNames=colNames, player=player, winMsg=winMsg)
 
 @app.route("/redir", methods=["POST"])
 def redir():
   info = request.form["info"]
   player = int(info[1]); row = int(info[4]); col = colNames[int(info[7])]
-  if checkWinner(df): flash("Game Over! Please reset the board.")
+  if checkWinner(dframe): flash("Game Over! Please reset the board.")
   else:
-    if pd.isnull(df.ix[row, col]):
-      df.ix[row, col] = player
+    if pd.isnull(dframe.ix[row, col]):
+      dframe.ix[row, col] = player
       if player == 1: player = 0
       else: player = 1
-    elif df.ix[row, col] == 0: flash("Player O has already occupied that square!")
+    elif dframe.ix[row, col] == 0: flash("Player O has already occupied that square!")
     else: flash("Player X has already occupied that square!")
   return redirect(url_for("index2", player=player))
 
 @app.route("/reset", methods=["GET", "POST"])
 def reset():
-  for row in range(len(df.index)):
+  for row in range(len(dframe.index)):
     for col in colNames:
-      df.ix[row, col] = np.nan
+      dframe.ix[row, col] = np.nan
   player = 1
   return redirect(url_for("index"))
 

@@ -45,12 +45,12 @@
           <h3> {% if player is equalto 1 %} Player X Moves Next {% else %} Player O Moves Next {% endif %}</h3>
           <table class="table">
             <tbody>
-              {% for row in range(df.index|length) %}
-              <tr> {% for val in range(df.ix[row, colNames]|length) %}
+              {% for row in range(dframe.index|length) %}
+              <tr> {% for val in range(dframe.ix[row, colNames]|length) %}
                 <td align="center">
                   <form method="post" action={{ url_for("redir") }}>
                   <button class="btn btn-default" value="{{ [player, row, val] }}" type="submit" name="info" style="height:80px;width:80px;font-size:50px">
-                    {% if df.ix[row, colNames[val]] is equalto 1 %} X {% elif df.ix[row, colNames[val]] is equalto 0 %} O {% endif %}
+                    {% if dframe.ix[row, colNames[val]] is equalto 1 %} X {% elif dframe.ix[row, colNames[val]] is equalto 0 %} O {% endif %}
                   </button>
                   </form>
                 </td>
