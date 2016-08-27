@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:1malirudolf@localhost/app1" # "postgresql://vbxtfqewruqsyd:Iq6hT2zJUXwc065E58bPQ3beBt@ec2-54-235-126-62.compute-1.amazonaws.com/dfj6qs4gm5hmp5"
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgres://vbxtfqewruqsyd:Iq6hT2zJUXwc065E58bPQ3beBt@ec2-54-235-126-62.compute-1.amazonaws.com:5432/dfj6qs4gm5hmp5"
 app.config["SECRET_KEY"] = "ITSASECRET"
 db = SQLAlchemy(app)
 
