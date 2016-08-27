@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://vbxtfqewruqsyd:Iq6hT2zJUXwc065E58bPQ3beBt@ec2-54-235-126-62.compute-1.amazonaws.com/dfj6qs4gm5hmp5"
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:1malirudolf@localhost/app1" # "postgresql://vbxtfqewruqsyd:Iq6hT2zJUXwc065E58bPQ3beBt@ec2-54-235-126-62.compute-1.amazonaws.com/dfj6qs4gm5hmp5"
 app.config["SECRET_KEY"] = "ITSASECRET"
 db = SQLAlchemy(app)
 
@@ -21,6 +21,8 @@ class GameTable(db.Model):
     self.A = A
     self.B = B
     self.C = C
+
+db.create_all()
 
 def resetBoard():
   for id in range(1, 4):
@@ -45,13 +47,9 @@ colNames = ['A', 'B', 'C']
 
 def getDF():
   dframe = pd.DataFrame.from_records([rec.__dict__ for rec in GameTable.query.order_by(GameTable.id).all()])
-  print(dframe)
   dframe = dframe.drop(["_sa_instance_state", "id"], axis=1)
-  print(dframe)
   dframe = dframe.apply(lambda x: pd.to_numeric(x), axis=0)
-  print(dframe)
   dframe = dframe.fillna(value=np.nan)
-  print(dframe)
   dframe.columns = colNames
   return dframe
 
@@ -88,7 +86,6 @@ def index():
 @app.route("/<int:player>", methods=["GET"])
 def index2(player):
   dframe = getDF()
-  print(dframe)
   if checkGameOver(dframe) is False:
     return render_template("index.html", dframe=dframe, colNames=colNames, player=player)
   else:
@@ -99,7 +96,6 @@ def index2(player):
 def redir():
   dframe = getDF()
   info = request.form["info"]
-  print(info)
   player = int(info[1]); row = int(info[4]); col = colNames[int(info[7])]
   if checkWinner(dframe): flash("Game Over! Please reset the board.")
   else:
