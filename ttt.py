@@ -41,6 +41,9 @@ def index():
 
 @app.route("/<int:player>", methods=["GET"])
 def index2(player):
+  print("#####")
+  print(df)
+  print("#####")
   if checkGameOver(df) is False:
     return render_template("index.html", df=df, colNames=colNames, player=player)
   else:
@@ -70,4 +73,4 @@ def reset():
   return redirect(url_for("index"))
 
 if __name__ == "__main__":
-  app.run(debug=True)
+  app.run()
